@@ -3,6 +3,7 @@
 <%= form_for @item do |f| %>
     <p> Name: </br> <%= f.text_field :name %></p>
     <p> Price: </br> <%= f.text_field :price %></p>
+    <p> Id: </br> <%= f.text_field :id %></p>
     <p> Description: </br> <%= f.text_field :description %></p>
     <p> Weight: </br> <%= f.text_field :weight %></p>
     <p> <%= f.submit "Create item." %></p>

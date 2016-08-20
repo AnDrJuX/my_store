@@ -6,6 +6,7 @@ class CreateItems < ActiveRecord::Migration[5.0]
       t.boolean :real
       t.text :description
       t.float :weight
+      t.integer :votes_count
       t.timestamps
     end
     add_index :items, :price

@@ -1,15 +1,16 @@
 class ItemsController < ApplicationController
 
-  #before_action :find_item, only: [:edit, :update, :destroy ]
+  before_action :find_item,      only: [:show, :edit, :update, :destroy, :upvote ]
+  #before_action :check_if_admin, only: [:edit, :update, :new, :create, :destroy ]
 
   def index
     @items = Item.all
   end
 
   def show
-   if @item = Item.where(id: params[:id]).first
-    #unless @item
-     else
+   #if @item = Item.where(id: params[:id]).first
+    unless @item
+     #else
       render text: "Page not found.", status: 404
     end
   end
@@ -19,7 +20,8 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
+    #@item = Item.find(params[:id])
+    #@item = Item.where(id: params[:id]).first
   end
 
   # def create
@@ -46,7 +48,8 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])
+    #@item = Item.find(params[:id])
+    #@item = Item.where(id: params[:id]).first
     params.permit!
     if @item.errors.empty?
       @item.update_attributes(params[:item])
@@ -57,17 +60,31 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item = Item.find(params[:id])
+    #@item = Item.find(params[:id])
+    #@item = Item.where(id: params[:id]).first
     @item.destroy
     redirect_to action: "index"
 
   end
 
-  #private
+  def upvote
+    @item.increment!(:votes_count)
+    redirect_to action: :index
+  end
 
-  #def find_item
+  def expensive
+    @items = Item.where("price > 1000")
+    render action: :index
+  end
+
+  private
+  def find_item
    # @item = Item.find(params[:id])
-    #@item = Item.where(params[:id])
+    @item = Item.where(id: params[:id]).first
+  end
+
+  #def check_if_admin
+   # render text: "Access denied.", status: 403 unless params[:admin]
   #end
 end
 
