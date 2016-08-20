@@ -1,16 +1,16 @@
 class ItemsController < ApplicationController
 
-  before_action :find_item,      only: [:show, :edit, :update, :destroy, :upvote ]
-  #before_action :check_if_admin, only: [:edit, :update, :new, :create, :destroy ]
+  before_action :find_item, only: [:show, :edit, :update, :destroy, :upvote]
+  before_action :check_if_admin, only: [:edit, :update, :new, :create, :destroy]
 
   def index
     @items = Item.all
   end
 
   def show
-   #if @item = Item.where(id: params[:id]).first
+    #if @item = Item.where(id: params[:id]).first
     unless @item
-     #else
+      #else
       render text: "Page not found.", status: 404
     end
   end
@@ -79,12 +79,13 @@ class ItemsController < ApplicationController
 
   private
   def find_item
-   # @item = Item.find(params[:id])
+    # @item = Item.find(params[:id])
     @item = Item.where(id: params[:id]).first
+    render_404 unless @item
   end
 
-  #def check_if_admin
-   # render text: "Access denied.", status: 403 unless params[:admin]
-  #end
+  def check_if_admin
+    render_403
+  end
 end
 
