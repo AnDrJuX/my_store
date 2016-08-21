@@ -84,8 +84,6 @@ class ItemsController < ApplicationController
     render_404 unless @item
   end
 
-  def check_if_admin
-    render_403 unless params[:admin]
-  end
+
 end
 
